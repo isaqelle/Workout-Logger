@@ -2,15 +2,19 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-
-
 //Load variables from .env file
 dotenv.config();
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+import exerciseRoutes from "./routes/exerciseRoutes.js";
+app.use("/api/exercises", exerciseRoutes);
+
+
+
+
 
 app.get("/", (req, res) => {
   res.send("API running");
