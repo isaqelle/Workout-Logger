@@ -10,7 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 import exerciseRoutes from "./routes/exerciseRoutes.js";
+import workoutRoutes from "./routes/workoutRoutes.js"
 app.use("/api/exercises", exerciseRoutes);
+app.use("/api/workouts", workoutRoutes);
 
 
 
