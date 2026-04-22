@@ -1,3 +1,5 @@
+import Workout from "../models/Workout.js";
+import User from "../models/User.js";
 import Exercise from "../models/Exercise.js";
 
 // GET all exercises

@@ -7,8 +7,11 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:5000/api/workouts")
       .then(res => res.json())
-      .then(data => 
-        setWorkouts(data));
+      .then(data => {
+        //debug
+        console.log("DATA:", data);
+        setWorkouts(data);
+      });
       
   }, []);
 
