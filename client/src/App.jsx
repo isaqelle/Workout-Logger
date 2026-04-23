@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import WorkoutList from "./components/WorkoutList";
+import WorkoutForm from "./components/WorkoutForm";
 
 function App() {
   const [workouts, setWorkouts] = useState([]);
@@ -8,8 +9,7 @@ function App() {
     fetch("http://localhost:5000/api/workouts")
       .then(res => res.json())
       .then(data => {
-        //debug
-        console.log("DATA:", data);
+
         setWorkouts(data);
       });
       
@@ -19,9 +19,15 @@ function App() {
     <div>
       <h1>Workout Logger</h1>
 
+      <WorkoutForm
+        onWorkoutAdded={(newWorkout) =>
+          setWorkouts([...workouts,newWorkout])
+      }/>
       <WorkoutList workouts={workouts} />
+      
     </div>
   );
+
 }
 
 export default App;
