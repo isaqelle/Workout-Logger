@@ -1,4 +1,4 @@
-function WorkoutItem({ workout }) {
+function WorkoutItem({ workout, onDelete }) {
   return (
     <div>
       <p>Date: {new Date(workout.date).toLocaleDateString()}</p>
@@ -8,9 +8,11 @@ function WorkoutItem({ workout }) {
         <div key={index}>
           <p>Exercise: {ex.exerciseId?.name}</p>
           <p>Sets: {ex.sets}</p>
-          <p>Exercise: {ex.reps}</p>
+          <p>Reps: {ex.reps}</p>
         </div>
       ))}
+
+      <button onClick={() => onDelete(workout._id)}>Delete</button>
     </div>
   );
 }
