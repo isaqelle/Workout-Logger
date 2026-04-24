@@ -48,7 +48,7 @@ function WorkoutForm({ onWorkoutAdded }) {
                 <option value="">Select Exercise</option>
                 {exercises.map(ex => (
                     <option key={ex._id} value={ex._id}>
-                        {ex.name}
+                        {ex.name} {ex.equipment ? `- ${ex.equipment}` : ""}
                     </option>
                 ))}
 

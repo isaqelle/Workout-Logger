@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import WorkoutList from "./components/WorkoutList";
 import WorkoutForm from "./components/WorkoutForm";
+import ExerciseForm from "./components/ExerciseForm";
 
 function App() {
   const [workouts, setWorkouts] = useState([]);
@@ -24,6 +25,8 @@ function App() {
           setWorkouts([...workouts,newWorkout])
       }/>
       <WorkoutList workouts={workouts} />
+
+      <ExerciseForm onExerciseAdded={()=> window.location.reload()}></ExerciseForm>
       
     </div>
   );
