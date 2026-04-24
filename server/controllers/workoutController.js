@@ -7,7 +7,11 @@ export const createWorkout = async (req, res) => {
     try {
         const new_workout = new Workout(req.body);
         await new_workout.save();
-        res.status(201).json(new_workout);
+
+        const populatedWorkout = await Workout.findById(new_workout._id)
+            .populate("userId", "name email")
+            .populate("exercises.exerciseId", "name muscleGroup equipment");
+        res.status(201).json(populatedWorkout);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
