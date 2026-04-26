@@ -70,10 +70,16 @@ export const updateWorkout = async (req, res) => {
         );
 
         if (!updatedWorkout) {
-            return res.status(404).json({ error: "Workout not found" });
+                    return res.status(404).json({ error: "Workout not found" });
         }
+        
 
-        res.json(updatedWorkout);
+        const populatedWorkout = await Workout.findById(updatedWorkout._id)
+            .populate("userId", "name email")
+            .populate("exercises.exerciseId", "name muscleGroup equipment")
+
+        res.json(populatedWorkout)
+        
     } catch (err) {
         res.status(400).json({ error: err.message });
     }

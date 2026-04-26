@@ -38,25 +38,33 @@ function App() {
 
 
   // UPDATE WORKOUT
-  const updateWorkout = async (id) => {
-    const newSets = prompt("Enter new set count: ");
-    const newReps = prompt("Enter new rep count: ");
+const updateWorkout = async (id) => {
+  const newSets = prompt("Enter new set count:");
+  const newReps = prompt("Enter new rep count:");
 
-    if (!newSets || !newReps) return;
+  if (!newSets || !newReps) return;
 
-    const res = await fetch(`http://localhost:5000/api/workouts/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        exercises: [{ sets: Number(newSets), reps: Number(newReps) }]
-      })
+  const workout = workouts.find(w => w._id === id);
+
+  const res = await fetch(`http://localhost:5000/api/workouts/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      exercises: workout.exercises.map(ex => ({
+        exerciseId: ex.exerciseId._id || ex.exerciseId,
+        sets: Number(newSets),
+        reps: Number(newReps)
+      }))
     })
+  });
 
-    const updated = await res.json();
+  const updated = await res.json();
 
-    //update UI
-    setWorkouts(workouts.map(w => w._id === id ? updated : w))
-  }
+  // update UI
+  setWorkouts(workouts.map(w =>
+    w._id === id ? updated : w
+  ));
+};
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error}...</p>
