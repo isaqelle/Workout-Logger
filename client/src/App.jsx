@@ -18,7 +18,7 @@ function App() {
       
   }, []);
 
-  //DELETE workout
+  //DELETE WORKOUT
   const deleteWorkout = async (id) => {
     await fetch(`http://localhost:5000/api/workouts/${id}`, {
       method: "DELETE"
@@ -26,6 +26,29 @@ function App() {
     //remove from UI:
     setWorkouts(workouts.filter(w => w._id !== id))
   }
+
+  
+  // UPDATE WORKOUT
+  const updateWorkout = async (id) => {
+    const newSets = prompt("Enter new sets: ");
+    const newReps = prompt("Enter new reps: ");
+
+    if (!newSets || !newReps) return;
+
+    const res = await fetch(`http://localhost:5000/api/workouts/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        exercises: [{sets: Number(newSets), reps: Number(newReps)}]
+      })
+    })
+
+    const updated = await res.json();
+
+    //update UI
+    setWorkouts(workouts.map(w => w._id === id ? updated : w))
+  }
+
 
   return (
     <div>
@@ -35,12 +58,13 @@ function App() {
         onWorkoutAdded={(newWorkout) =>
           setWorkouts([...workouts,newWorkout])
       }/>
-      <WorkoutList workouts={workouts} onDelete={deleteWorkout} />
+      <WorkoutList workouts={workouts} onDelete={deleteWorkout} onUpdate={updateWorkout} />
 
       <ExerciseForm onExerciseAdded={()=> window.location.reload()}></ExerciseForm>
       
     </div>
   );
+
 
 }
 
