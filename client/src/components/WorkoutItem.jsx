@@ -1,6 +1,6 @@
 function WorkoutItem({ workout, onDelete, onUpdate }) {
   return (
-    <div>
+    <div className="workoutItem">
       <p>Date: {new Date(workout.date).toLocaleDateString()}</p>
       <p>User: {workout.userId?.name}</p>
 

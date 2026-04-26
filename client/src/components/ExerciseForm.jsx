@@ -23,7 +23,8 @@ function ExerciseForm({ onExerciseAdded }) {
         setEquipment("");
     };
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="exerciseContainer">
+        <form className="exerciseForm" onSubmit={handleSubmit}>
             <h2>Register new exercise</h2>
 
             <input placeholder="Exercise name" value={name} onChange={(e) => setName(e.target.value)} />
@@ -34,7 +35,8 @@ function ExerciseForm({ onExerciseAdded }) {
 
             <button type="submit">Add Exercise</button>
         
-        </form>
+            </form>
+        </div>
     )
 }
 

@@ -1,8 +1,13 @@
 import WorkoutItem from "./WorkoutItem";
 
 function WorkoutList({ workouts, onDelete, onUpdate }) {
+  
+  if (workouts.length === 0) {
+    return <p className="noWorkouts">No workouts logged yet</p>
+  }
+  
   return (
-    <div>
+    <div className="workoutList">
       {workouts.map(workout => (
         <WorkoutItem
           key={workout._id}

@@ -41,11 +41,12 @@ function WorkoutForm({ onWorkoutAdded }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="workoutContainer">
+        <form className="workoutForm" onSubmit={handleSubmit}>
             <h2>Log New Workout</h2>
             
             <select value={exerciseId} onChange={(e) => setExerciseId(e.target.value)}>
-                <option value="">Select Exercise</option>
+                <option className="dropdown" value="">Select Exercise</option>
                 {exercises.map(ex => (
                     <option key={ex._id} value={ex._id}>
                         {ex.name} {ex.equipment ? `- ${ex.equipment}` : ""}
@@ -61,7 +62,8 @@ function WorkoutForm({ onWorkoutAdded }) {
                 onChange={(e) => setReps(e.target.value)} />
             
             <button type="submit">Log Workout</button>
-        </form>
+            </form>
+            </div>
     )
 }
 

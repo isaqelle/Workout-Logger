@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import WorkoutList from "./components/WorkoutList";
 import WorkoutForm from "./components/WorkoutForm";
 import ExerciseForm from "./components/ExerciseForm";
+import "./App.css";
 
 function App() {
   const [workouts, setWorkouts] = useState([]);
@@ -22,7 +23,7 @@ function App() {
         setLoading(false);
       });
   }, []);
-    
+
 
 
 
@@ -35,11 +36,11 @@ function App() {
     setWorkouts(workouts.filter(w => w._id !== id))
   }
 
-  
+
   // UPDATE WORKOUT
   const updateWorkout = async (id) => {
-    const newSets = prompt("Enter new sets: ");
-    const newReps = prompt("Enter new reps: ");
+    const newSets = prompt("Enter new set count: ");
+    const newReps = prompt("Enter new rep count: ");
 
     if (!newSets || !newReps) return;
 
@@ -47,7 +48,7 @@ function App() {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        exercises: [{sets: Number(newSets), reps: Number(newReps)}]
+        exercises: [{ sets: Number(newSets), reps: Number(newReps) }]
       })
     })
 
@@ -61,17 +62,19 @@ function App() {
   if (error) return <p>{error}...</p>
 
   return (
-    <div>
+    <div className="container">
       <h1>Workout Logger</h1>
 
       <WorkoutForm
         onWorkoutAdded={(newWorkout) =>
-          setWorkouts([...workouts,newWorkout])
-      }/>
-      <WorkoutList workouts={workouts} onDelete={deleteWorkout} onUpdate={updateWorkout} />
+          setWorkouts([...workouts, newWorkout])
+        } />
+
 
       <ExerciseForm onExerciseAdded={() => window.location.reload()}></ExerciseForm>
-      
+
+      <h2>Logged Workouts:</h2>
+      <WorkoutList workouts={workouts} onDelete={deleteWorkout} onUpdate={updateWorkout} />
       
     </div>
   );
