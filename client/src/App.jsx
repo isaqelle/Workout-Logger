@@ -6,10 +6,21 @@ import "./App.css";
 
 function App() {
   const [workouts, setWorkouts] = useState([]);
+  //for stats:
+  const [stats, setStats] = useState([]);
 
   // for error and loading states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
+  const fetchStats = () => {
+  fetch("http://localhost:5000/api/workouts/stats/workout-counter")
+    .then(res => res.json())
+    .then(data => setStats(data))
+    .catch(err => console.error(err));
+  };
+  
 
   useEffect(() => {
     fetch("http://localhost:5000/api/workouts")
@@ -25,6 +36,10 @@ function App() {
   }, []);
 
 
+  // for stats:
+  useEffect(() => {
+    fetchStats();
+}, []);
 
 
   //DELETE WORKOUT
@@ -34,6 +49,7 @@ function App() {
     })
     //remove from UI:
     setWorkouts(workouts.filter(w => w._id !== id))
+    fetchStats();
   }
 
 
@@ -64,6 +80,7 @@ const updateWorkout = async (id) => {
   setWorkouts(workouts.map(w =>
     w._id === id ? updated : w
   ));
+  fetchStats();
 };
 
   if (loading) return <p>Loading...</p>
@@ -74,14 +91,24 @@ const updateWorkout = async (id) => {
       <h1>Workout Logger</h1>
 
       <WorkoutForm
-        onWorkoutAdded={(newWorkout) =>
-          setWorkouts([...workouts, newWorkout])
-        } />
+        onWorkoutAdded={(newWorkout) => {
+          setWorkouts([...workouts, newWorkout]);
+          fetchStats();
+        }} />
 
 
       <ExerciseForm onExerciseAdded={() => window.location.reload()}></ExerciseForm>
 
       <h2>Logged Workouts:</h2>
+
+      {/* show stats */}
+        <div className="stats">
+        {stats.map((s, index) => (
+      <p key={index}>
+        {s.user}: {s.totalWorkouts} workout/s
+      </p>
+    ))}
+  </div>
       <WorkoutList workouts={workouts} onDelete={deleteWorkout} onUpdate={updateWorkout} />
       
     </div>
