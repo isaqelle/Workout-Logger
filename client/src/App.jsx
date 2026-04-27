@@ -47,7 +47,7 @@ function App() {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this workout?");
     if (!confirmDelete) return;
-    
+
     await fetch(`http://localhost:5000/api/workouts/${id}`, {
       method: "DELETE"
     })
@@ -98,7 +98,9 @@ const updateWorkout = async (id) => {
         onWorkoutAdded={(newWorkout) => {
           setWorkouts([...workouts, newWorkout]);
           fetchStats();
+
         }} />
+
 
 
       <ExerciseForm onExerciseAdded={() => window.location.reload()}></ExerciseForm>
