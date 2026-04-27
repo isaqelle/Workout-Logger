@@ -44,6 +44,10 @@ function App() {
 
   //DELETE WORKOUT
   const deleteWorkout = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this workout?");
+    if (!confirmDelete) return;
+    
     await fetch(`http://localhost:5000/api/workouts/${id}`, {
       method: "DELETE"
     })
