@@ -38,27 +38,39 @@ export const getWorkouts = async (req, res) => {
 
 // GET total workouts per user
 export const getWorkoutStats = async (req, res) => {
-    try {
-        const workouts = await Workout.find().populate("userId", "name");
-        const counts = {};
-        
-        workouts.forEach(workout => {
-            const userName = workout.userId.name;
-            if (!counts[userName]) {
-                counts[userName] = 0;
-            }
-            counts[userName]++;
-        });
+  try {
+    const workouts = await Workout.find().populate("userId", "name");
 
-        const result = Object.keys(counts).map(name => ({
-            user: name,
-            totalWorkouts: counts[name]
-        }));
-        res.json(result);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-}
+    const counts = {};
+
+    workouts.forEach(workout => {
+
+      if (!workout.userId) {
+        console.log("Skipped workout with null userId");
+        return;
+      }
+
+      const userName = workout.userId.name;
+
+      if (!counts[userName]) {
+        counts[userName] = 0;
+      }
+
+      counts[userName]++;
+    });
+
+    const result = Object.keys(counts).map(name => ({
+      user: name,
+      totalWorkouts: counts[name]
+    }));
+
+    res.json(result);
+
+  } catch (err) {
+    console.error("ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
 
 // UPDATE a workout
 export const updateWorkout = async (req, res) => {
