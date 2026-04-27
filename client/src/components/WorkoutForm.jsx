@@ -30,6 +30,7 @@ function WorkoutForm({ onWorkoutAdded }) {
         setExerciseId("");
         setSets("");
         setReps("");
+        
     }
 
     const handleSubmit = async (e) => {
@@ -49,6 +50,13 @@ function WorkoutForm({ onWorkoutAdded }) {
         });
         const data = await res.json()
         onWorkoutAdded(data);
+        alert("Workout successfully added!")
+        
+        //clear inputs
+        setExerciseList([]);
+        setExerciseId("");
+        setSets("");
+        setReps("");
     };
 
     return (
