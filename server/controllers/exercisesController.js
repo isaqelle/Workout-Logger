@@ -5,7 +5,7 @@ import Exercise from "../models/Exercise.js";
 // GET all exercises
 export const getExercises = async (req, res) => {
     //debug
-    console.log("BODY:", req.body); 
+    // console.log("BODY:", req.body); 
     try {
         const exercises = await Exercise.find();
         res.json(exercises);

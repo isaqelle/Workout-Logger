@@ -21,24 +21,26 @@ function App() {
     .catch(err => console.error(err));
   };
   
-
+// Added auto-refresh using setInterval and cleanup to keep UI in sync with DB
   useEffect(() => {
-    fetch("http://localhost:5000/api/workouts")
-      .then(res => res.json())
-      .then(data => {
-        setWorkouts(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError("Failed to load workouts");
-        setLoading(false);
-      });
-  }, []);
+    const fetchWorkouts = () => {
+      fetch("http://localhost:5000/api/workouts")
+        .then(res => res.json())
+        .then(data => {
+          setWorkouts(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError("Failed to load workouts");
+          setLoading(false);
+        });
+  };
 
+  fetchWorkouts();
 
-  // for stats:
-  useEffect(() => {
-    fetchStats();
+  const interval = setInterval(fetchWorkouts, 5000);
+
+  return () => clearInterval(interval);
 }, []);
 
 

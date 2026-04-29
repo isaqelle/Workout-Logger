@@ -28,12 +28,9 @@ const workoutSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
                 min: 1
-            },
-            weight: {
-                type: Number,
-                min: 0
             }
         }
+    
     ]
     
 });
