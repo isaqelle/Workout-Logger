@@ -19,6 +19,9 @@ const workoutSchema = new mongoose.Schema({
                 ref: "Exercise",
                 required: true
             },
+            weight: {
+                type: Number,
+            },
             sets: {
                 type: Number,
                 required: true,
